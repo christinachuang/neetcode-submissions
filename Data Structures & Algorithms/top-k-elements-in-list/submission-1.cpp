@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        //sorted?
+        // all items of nums are valid?
+        // must have answer?
+        unordered_map<int, int> lookup;
+        for(auto& x : nums)
+           lookup[x]++;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+        for(auto& [key, val] : lookup){
+            pq.push({val, key});
+            if(pq.size() > k)
+                pq.pop();
+        }
+        vector<int> output;
+        for(int i = 0; i < k; i++){
+            if(!pq.empty()){
+                output.push_back(pq.top().second);
+                pq.pop();
+            }
+        }
+        return output;
+    }
+};
